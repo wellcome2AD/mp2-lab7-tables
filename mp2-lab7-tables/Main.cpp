@@ -1,17 +1,18 @@
 #include "TScanTable.h"
 #include "TSortTable.h"
 #include "TArrayHash.h"
+#include "TListHash.h"
 #include <cassert>
 #include <iostream>
 
 int main()
 {
 	int size = 10;
-	TArrayHash ah(size);
+	TListHash ah(size);
 	TTable& table = ah;
 	assert(table.GetDataCount() == 0);
 	TRecord empty_rec = table.GetCurrentRecord();
-	assert(empty_rec.key == 0);
+	assert(empty_rec.key == -1);
 	assert(table.GetEffectiveness() == 0);
 	assert(table.GetSize() == size);
 	assert(table.IsEmpty() == true);
@@ -31,5 +32,5 @@ int main()
 	assert(table.Delete(TKey(11)) == false);
 	table.Delete(TKey(2));
 	assert(table.Insert(rec_array[2]) == true);
-	return true;
+	return 0;
 }

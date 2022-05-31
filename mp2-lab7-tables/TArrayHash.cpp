@@ -1,5 +1,4 @@
 #include "TArrayHash.h"
-
 TArrayHash::TArrayHash(int _size, int _step) : mas(new TRecord[_size]), size(_size), step(_step)
 {
 	free.key = -1;
@@ -9,12 +8,7 @@ TArrayHash::TArrayHash(int _size, int _step) : mas(new TRecord[_size]), size(_si
 		mas[i] = free;
 	}
 }
-
-int TArrayHash::GetSize() const
-{
-	return size;
-}
-
+int TArrayHash::GetSize() const { return size; }
 TRecord TArrayHash::GetCurrentRecord() const
 {
 	if (!IsEnd() && !IsEmpty())
@@ -22,7 +16,6 @@ TRecord TArrayHash::GetCurrentRecord() const
 	else
 		return TRecord(curr);
 }
-
 bool TArrayHash::Find(TKey key) const
 {
 	int pos = HashFunc(key) % size, delpos = -1;
@@ -53,7 +46,6 @@ bool TArrayHash::Find(TKey key) const
 	}
 	return res;
 }
-
 bool TArrayHash::Insert(TRecord rec)
 {
 	if (IsFull() || Find(rec.key))
@@ -65,7 +57,6 @@ bool TArrayHash::Insert(TRecord rec)
 	++eff;
 	return true;
 }
-
 bool TArrayHash::Delete(TKey key)
 {
 	if (IsEmpty() || !Find(key))
@@ -75,23 +66,19 @@ bool TArrayHash::Delete(TKey key)
 	++eff;
 	return true;
 }
-
 void TArrayHash::Reset() const
 {
 	curr = 0;
 }
-
 void TArrayHash::GoNext() const
 {
 	while(mas[curr] == del || mas[curr] == free)
 		++curr;
 }
-
 bool TArrayHash::IsFull() const
 {
 	return dataCount == size;
 }
-
 bool TArrayHash::IsEnd() const
 {
 	return curr == dataCount;
