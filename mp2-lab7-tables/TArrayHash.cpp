@@ -9,12 +9,16 @@ TArrayHash::TArrayHash(int _size, int _step) : mas(new TRecord[_size]), size(_si
 	}
 }
 int TArrayHash::GetSize() const { return size; }
-TRecord TArrayHash::GetCurrentRecord() const
+const TRecord& TArrayHash::GetCurrentRecord() const
 {
 	if (!IsEnd() && !IsEmpty())
+	{
 		return mas[curr];
+	}
 	else
-		return TRecord(curr);
+	{
+		throw std::exception();
+	}
 }
 bool TArrayHash::Find(TKey key) const
 {

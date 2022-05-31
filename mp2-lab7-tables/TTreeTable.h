@@ -29,7 +29,7 @@ public:
 	void GoNext() const override;
 	bool IsFull() const override { return false; }
 	bool IsEnd() const override;
-	TRecord GetCurrentRecord() const override;
+	const TRecord& GetCurrentRecord() const override;
 	friend std::ostream& operator<<(std::ostream& os, const TTreeTable& table);
 };
 

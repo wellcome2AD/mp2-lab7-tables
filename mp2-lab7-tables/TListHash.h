@@ -19,6 +19,6 @@ public:
 	void Reset() const override;
 	void GoNext() const override;
 	bool IsEnd() const override;
-	TRecord GetCurrentRecord() const override;
+	const TRecord& GetCurrentRecord() const override;
 };
 

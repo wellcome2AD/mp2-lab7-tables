@@ -10,7 +10,7 @@ class TArrayHash :
 public:
     TArrayHash(int = 100, int = 7);
     int GetSize() const override;
-    TRecord GetCurrentRecord() const override;
+    const TRecord& GetCurrentRecord() const override;
     bool Find(TKey) const override;
     bool Insert(TRecord rec) override;
     bool Delete(TKey key) override;

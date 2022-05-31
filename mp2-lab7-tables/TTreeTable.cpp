@@ -19,12 +19,18 @@ bool TTreeTable::Find(TKey key) const
 	{
 		++eff;
 		if (pCurr->rec.key == key)
+		{
 			return true;
+		}
 		pPrev = pCurr;
 		if (pCurr->rec.key > key)
+		{
 			pCurr = pCurr->pL;
+		}
 		else
+		{
 			pCurr = pCurr->pR;
+		}
 	}
 	pCurr = pPrev;
 	return false;
@@ -34,7 +40,7 @@ bool TTreeTable::Insert(TRecord rec)
 	if (Find(rec.key))
 		return false;
 	TNode* tmp = new TNode(rec);
-	if (pCurr = nullptr)
+	if (pCurr == nullptr)
 	{
 		pRoot = tmp;
 	}
@@ -131,7 +137,17 @@ void TTreeTable::GoNext() const
 	}
 }
 bool TTreeTable::IsEnd() const { return currPos == dataCount; }
-TRecord TTreeTable::GetCurrentRecord() const { return pCurr->rec; }
+const TRecord& TTreeTable::GetCurrentRecord() const
+{ 
+	if (pCurr)
+	{
+		return pCurr->rec;
+	}
+	else
+	{
+		throw std::exception("Table is empty\n");
+	}
+}
 void TTreeTable::PrintRec(std::ostream& os, const TNode* p, int level)
 {
 	if (p)

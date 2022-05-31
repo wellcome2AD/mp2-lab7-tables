@@ -65,10 +65,14 @@ bool TListHash::IsEnd() const
 {
 	return currList == size;
 }
-TRecord TListHash::GetCurrentRecord() const 
+const TRecord& TListHash::GetCurrentRecord() const
 {
 	if (IsEmpty() || IsEnd())
-		return TRecord();
+	{
+		throw std::exception("Table is empty\n");
+	}
 	else
-		return *pCurr; 
+	{
+		return *pCurr;
+	}
 }

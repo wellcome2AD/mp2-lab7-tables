@@ -24,8 +24,8 @@ struct TRecord
 class TTable
 {
 protected:
-	int dataCount;
-	mutable int eff;
+	int dataCount = 0;
+	mutable int eff = 0;
 public:
 	TTable();
 	virtual ~TTable() = default;
@@ -42,7 +42,7 @@ public:
 	virtual void Reset() const = 0;
 	virtual void GoNext() const = 0;
 	virtual bool IsEnd() const = 0;
-	virtual TRecord GetCurrentRecord() const = 0;
+	virtual const TRecord& GetCurrentRecord() const = 0;
 	friend std::ostream& operator<<(std::ostream& os, TTable& t)
 	{
 		for (t.Reset(); !t.IsEnd(); t.GoNext())
