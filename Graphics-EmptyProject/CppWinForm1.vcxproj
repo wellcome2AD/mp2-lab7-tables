@@ -151,6 +151,11 @@
       <DependentUpon>MyForm.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\mp2-lab7-tables\mp2-lab7-tables.vcxproj">
+      <Project>{26a75641-ade2-4b1c-b6b4-3ee9d1a0ee98}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -1,5 +1,12 @@
 #pragma once
-
+#include <msclr\marshal_cppstd.h>
+#include "..\mp2-lab7-tables\TTable.h"
+#include "..\mp2-lab7-tables\TSortTable.h"
+#include "..\mp2-lab7-tables\TScanTable.h"
+#include "..\mp2-lab7-tables\TArrayHash.h"
+#include "..\mp2-lab7-tables\TListHash.h"
+#include "..\mp2-lab7-tables\TTreeTable.h"
+#include "..\mp2-lab7-tables\TBalTree.h"
 namespace CppWinForm1 {
 
 	using namespace System;
@@ -34,29 +41,33 @@ namespace CppWinForm1 {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::Label^ label1;
-	protected:
-	private: System::Windows::Forms::RadioButton^ radioButton1;
-	private: System::Windows::Forms::RadioButton^ radioButton2;
-	private: System::Windows::Forms::RadioButton^ radioButton3;
-	private: System::Windows::Forms::RadioButton^ radioButton4;
-	private: System::Windows::Forms::RadioButton^ radioButton5;
-	private: System::Windows::Forms::RadioButton^ radioButton6;
-	private: System::Windows::Forms::Label^ label2;
-	private: System::Windows::Forms::TextBox^ textBox1;
-	private: System::Windows::Forms::TextBox^ textBox2;
-	private: System::Windows::Forms::Label^ label3;
-	private: System::Windows::Forms::Label^ label4;
-	private: System::Windows::Forms::Label^ label5;
-	private: System::Windows::Forms::TextBox^ textBox3;
-	private: System::Windows::Forms::TextBox^ textBox4;
-	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::Button^ button2;
-	private: System::Windows::Forms::Button^ button3;
-	private: System::Windows::Forms::Button^ button4;
-	private: System::Windows::Forms::Button^ button5;
-
 	private:
+		System::Windows::Forms::Label^ label1;
+
+		System::Windows::Forms::Label^ label2;
+		System::Windows::Forms::TextBox^ textBoxRecNumber;
+		System::Windows::Forms::TextBox^ textBoxKeyRange;
+
+		System::Windows::Forms::Label^ label3;
+		System::Windows::Forms::Label^ label4;
+		System::Windows::Forms::Label^ label5;
+		System::Windows::Forms::TextBox^ textBoxKey;
+		System::Windows::Forms::TextBox^ textBoxResult;
+		System::Windows::Forms::Button^ buttonExit;
+
+		System::Windows::Forms::Button^ buttonCreateTable;
+		System::Windows::Forms::Button^ buttonFind;
+		System::Windows::Forms::Button^ buttonInsert;
+		System::Windows::Forms::Button^ buttonDelete;
+
+		System::Windows::Forms::DataGridView^ dataGridView1;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ Key;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ Value;
+
+		System::Windows::Forms::ComboBox^ comboBox1;
+
+		TTable* table;	
+
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -70,25 +81,24 @@ namespace CppWinForm1 {
 		void InitializeComponent(void)
 		{
 			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->radioButton1 = (gcnew System::Windows::Forms::RadioButton());
-			this->radioButton2 = (gcnew System::Windows::Forms::RadioButton());
-			this->radioButton3 = (gcnew System::Windows::Forms::RadioButton());
-			this->radioButton4 = (gcnew System::Windows::Forms::RadioButton());
-			this->radioButton5 = (gcnew System::Windows::Forms::RadioButton());
-			this->radioButton6 = (gcnew System::Windows::Forms::RadioButton());
 			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
+			this->textBoxRecNumber = (gcnew System::Windows::Forms::TextBox());
+			this->textBoxKeyRange = (gcnew System::Windows::Forms::TextBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->label5 = (gcnew System::Windows::Forms::Label());
-			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
-			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->button3 = (gcnew System::Windows::Forms::Button());
-			this->button4 = (gcnew System::Windows::Forms::Button());
-			this->button5 = (gcnew System::Windows::Forms::Button());
+			this->textBoxKey = (gcnew System::Windows::Forms::TextBox());
+			this->textBoxResult = (gcnew System::Windows::Forms::TextBox());
+			this->buttonExit = (gcnew System::Windows::Forms::Button());
+			this->buttonCreateTable = (gcnew System::Windows::Forms::Button());
+			this->buttonFind = (gcnew System::Windows::Forms::Button());
+			this->buttonInsert = (gcnew System::Windows::Forms::Button());
+			this->buttonDelete = (gcnew System::Windows::Forms::Button());
+			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
+			this->Key = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->Value = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// label1
@@ -96,125 +106,47 @@ namespace CppWinForm1 {
 			this->label1->AutoSize = true;
 			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label1->Location = System::Drawing::Point(279, 20);
+			this->label1->Location = System::Drawing::Point(304, 34);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(94, 17);
 			this->label1->TabIndex = 0;
 			this->label1->Text = L"Тип таблицы";
-			// 
-			// radioButton1
-			// 
-			this->radioButton1->AutoSize = true;
-			this->radioButton1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->radioButton1->Location = System::Drawing::Point(257, 40);
-			this->radioButton1->Name = L"radioButton1";
-			this->radioButton1->Size = System::Drawing::Size(129, 19);
-			this->radioButton1->TabIndex = 1;
-			this->radioButton1->TabStop = true;
-			this->radioButton1->Text = L"Неупорядоченная";
-			this->radioButton1->UseVisualStyleBackColor = true;
-			// 
-			// radioButton2
-			// 
-			this->radioButton2->AutoSize = true;
-			this->radioButton2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->radioButton2->Location = System::Drawing::Point(257, 64);
-			this->radioButton2->Name = L"radioButton2";
-			this->radioButton2->Size = System::Drawing::Size(116, 19);
-			this->radioButton2->TabIndex = 2;
-			this->radioButton2->TabStop = true;
-			this->radioButton2->Text = L"Упорядоченная";
-			this->radioButton2->UseVisualStyleBackColor = true;
-			// 
-			// radioButton3
-			// 
-			this->radioButton3->AutoSize = true;
-			this->radioButton3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->radioButton3->Location = System::Drawing::Point(257, 88);
-			this->radioButton3->Name = L"radioButton3";
-			this->radioButton3->Size = System::Drawing::Size(154, 19);
-			this->radioButton3->TabIndex = 3;
-			this->radioButton3->TabStop = true;
-			this->radioButton3->Text = L"Хэш-таблица (массив)";
-			this->radioButton3->UseVisualStyleBackColor = true;
-			// 
-			// radioButton4
-			// 
-			this->radioButton4->AutoSize = true;
-			this->radioButton4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->radioButton4->Location = System::Drawing::Point(257, 112);
-			this->radioButton4->Name = L"radioButton4";
-			this->radioButton4->Size = System::Drawing::Size(151, 19);
-			this->radioButton4->TabIndex = 4;
-			this->radioButton4->TabStop = true;
-			this->radioButton4->Text = L"Хэш-таблица (список)";
-			this->radioButton4->UseVisualStyleBackColor = true;
-			// 
-			// radioButton5
-			// 
-			this->radioButton5->AutoSize = true;
-			this->radioButton5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->radioButton5->Location = System::Drawing::Point(257, 136);
-			this->radioButton5->Name = L"radioButton5";
-			this->radioButton5->Size = System::Drawing::Size(69, 19);
-			this->radioButton5->TabIndex = 5;
-			this->radioButton5->TabStop = true;
-			this->radioButton5->Text = L"Дерево";
-			this->radioButton5->UseVisualStyleBackColor = true;
-			// 
-			// radioButton6
-			// 
-			this->radioButton6->AutoSize = true;
-			this->radioButton6->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->radioButton6->Location = System::Drawing::Point(257, 159);
-			this->radioButton6->Name = L"radioButton6";
-			this->radioButton6->Size = System::Drawing::Size(94, 19);
-			this->radioButton6->TabIndex = 6;
-			this->radioButton6->TabStop = true;
-			this->radioButton6->Text = L"АВЛ-дерево";
-			this->radioButton6->UseVisualStyleBackColor = true;
 			// 
 			// label2
 			// 
 			this->label2->AutoSize = true;
 			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label2->Location = System::Drawing::Point(457, 23);
+			this->label2->Location = System::Drawing::Point(504, 37);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(107, 17);
 			this->label2->TabIndex = 7;
 			this->label2->Text = L"Число записей";
 			// 
-			// textBox1
+			// textBoxRecNumber
 			// 
-			this->textBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->textBoxRecNumber->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->textBox1->Location = System::Drawing::Point(570, 20);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(56, 21);
-			this->textBox1->TabIndex = 8;
+			this->textBoxRecNumber->Location = System::Drawing::Point(617, 34);
+			this->textBoxRecNumber->Name = L"textBoxRecNumber";
+			this->textBoxRecNumber->Size = System::Drawing::Size(56, 21);
+			this->textBoxRecNumber->TabIndex = 8;
 			// 
-			// textBox2
+			// textBoxKeyRange
 			// 
-			this->textBox2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->textBoxKeyRange->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->textBox2->Location = System::Drawing::Point(570, 51);
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(56, 21);
-			this->textBox2->TabIndex = 9;
+			this->textBoxKeyRange->Location = System::Drawing::Point(617, 65);
+			this->textBoxKeyRange->Name = L"textBoxKeyRange";
+			this->textBoxKeyRange->Size = System::Drawing::Size(56, 21);
+			this->textBoxKeyRange->TabIndex = 9;
 			// 
 			// label3
 			// 
 			this->label3->AutoSize = true;
 			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label3->Location = System::Drawing::Point(437, 52);
+			this->label3->Location = System::Drawing::Point(484, 66);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(127, 17);
 			this->label3->TabIndex = 10;
@@ -225,7 +157,7 @@ namespace CppWinForm1 {
 			this->label4->AutoSize = true;
 			this->label4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label4->Location = System::Drawing::Point(521, 99);
+			this->label4->Location = System::Drawing::Point(568, 113);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(43, 17);
 			this->label4->TabIndex = 11;
@@ -236,116 +168,247 @@ namespace CppWinForm1 {
 			this->label5->AutoSize = true;
 			this->label5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label5->Location = System::Drawing::Point(488, 134);
+			this->label5->Location = System::Drawing::Point(535, 148);
 			this->label5->Name = L"label5";
 			this->label5->Size = System::Drawing::Size(76, 17);
 			this->label5->TabIndex = 12;
 			this->label5->Text = L"Результат";
 			// 
-			// textBox3
+			// textBoxKey
 			// 
-			this->textBox3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->textBoxKey->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->textBox3->Location = System::Drawing::Point(570, 99);
-			this->textBox3->Name = L"textBox3";
-			this->textBox3->Size = System::Drawing::Size(56, 21);
-			this->textBox3->TabIndex = 13;
+			this->textBoxKey->Location = System::Drawing::Point(617, 113);
+			this->textBoxKey->Name = L"textBoxKey";
+			this->textBoxKey->Size = System::Drawing::Size(56, 21);
+			this->textBoxKey->TabIndex = 13;
 			// 
-			// textBox4
+			// textBoxResult
 			// 
-			this->textBox4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->textBoxResult->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->textBox4->Location = System::Drawing::Point(570, 133);
-			this->textBox4->Name = L"textBox4";
-			this->textBox4->Size = System::Drawing::Size(56, 21);
-			this->textBox4->TabIndex = 14;
+			this->textBoxResult->Location = System::Drawing::Point(617, 147);
+			this->textBoxResult->Name = L"textBoxResult";
+			this->textBoxResult->ReadOnly = true;
+			this->textBoxResult->Size = System::Drawing::Size(56, 21);
+			this->textBoxResult->TabIndex = 14;
 			// 
-			// button1
+			// buttonExit
 			// 
-			this->button1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->buttonExit->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button1->Location = System::Drawing::Point(347, 384);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(167, 31);
-			this->button1->TabIndex = 15;
-			this->button1->Text = L"Выход";
-			this->button1->UseVisualStyleBackColor = true;
+			this->buttonExit->Location = System::Drawing::Point(347, 384);
+			this->buttonExit->Name = L"buttonExit";
+			this->buttonExit->Size = System::Drawing::Size(167, 31);
+			this->buttonExit->TabIndex = 15;
+			this->buttonExit->Text = L"Выход";
+			this->buttonExit->UseVisualStyleBackColor = true;
 			// 
-			// button2
+			// buttonCreateTable
 			// 
-			this->button2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->buttonCreateTable->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button2->Location = System::Drawing::Point(307, 200);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(257, 27);
-			this->button2->TabIndex = 16;
-			this->button2->Text = L"Создать таблицу";
-			this->button2->UseVisualStyleBackColor = true;
+			this->buttonCreateTable->Location = System::Drawing::Point(307, 200);
+			this->buttonCreateTable->Name = L"buttonCreateTable";
+			this->buttonCreateTable->Size = System::Drawing::Size(257, 27);
+			this->buttonCreateTable->TabIndex = 16;
+			this->buttonCreateTable->Text = L"Создать таблицу";
+			this->buttonCreateTable->UseVisualStyleBackColor = true;
+			this->buttonCreateTable->Click += gcnew System::EventHandler(this, &MyForm::buttonCreateTable_Click);
 			// 
-			// button3
+			// buttonFind
 			// 
-			this->button3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->buttonFind->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button3->Location = System::Drawing::Point(307, 243);
-			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(257, 27);
-			this->button3->TabIndex = 17;
-			this->button3->Text = L"Поиск по ключу";
-			this->button3->UseVisualStyleBackColor = true;
+			this->buttonFind->Location = System::Drawing::Point(307, 243);
+			this->buttonFind->Name = L"buttonFind";
+			this->buttonFind->Size = System::Drawing::Size(257, 27);
+			this->buttonFind->TabIndex = 17;
+			this->buttonFind->Text = L"Поиск по ключу";
+			this->buttonFind->UseVisualStyleBackColor = true;
 			// 
-			// button4
+			// buttonInsert
 			// 
-			this->button4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->buttonInsert->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button4->Location = System::Drawing::Point(307, 286);
-			this->button4->Name = L"button4";
-			this->button4->Size = System::Drawing::Size(257, 27);
-			this->button4->TabIndex = 18;
-			this->button4->Text = L"Добавить запись";
-			this->button4->UseVisualStyleBackColor = true;
+			this->buttonInsert->Location = System::Drawing::Point(307, 286);
+			this->buttonInsert->Name = L"buttonInsert";
+			this->buttonInsert->Size = System::Drawing::Size(257, 27);
+			this->buttonInsert->TabIndex = 18;
+			this->buttonInsert->Text = L"Добавить запись";
+			this->buttonInsert->UseVisualStyleBackColor = true;
 			// 
-			// button5
+			// buttonDelete
 			// 
-			this->button5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->buttonDelete->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button5->Location = System::Drawing::Point(307, 331);
-			this->button5->Name = L"button5";
-			this->button5->Size = System::Drawing::Size(257, 27);
-			this->button5->TabIndex = 19;
-			this->button5->Text = L"Удалить запись";
-			this->button5->UseVisualStyleBackColor = true;
+			this->buttonDelete->Location = System::Drawing::Point(307, 331);
+			this->buttonDelete->Name = L"buttonDelete";
+			this->buttonDelete->Size = System::Drawing::Size(257, 27);
+			this->buttonDelete->TabIndex = 19;
+			this->buttonDelete->Text = L"Удалить запись";
+			this->buttonDelete->UseVisualStyleBackColor = true;
+			// 
+			// dataGridView1
+			// 
+			this->dataGridView1->AllowUserToAddRows = false;
+			this->dataGridView1->AllowUserToDeleteRows = false;
+			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(2) { this->Key, this->Value });
+			this->dataGridView1->Location = System::Drawing::Point(11, 12);
+			this->dataGridView1->Name = L"dataGridView1";
+			this->dataGridView1->Size = System::Drawing::Size(256, 403);
+			this->dataGridView1->TabIndex = 20;
+			// 
+			// Key
+			// 
+			this->Key->HeaderText = L"Key";
+			this->Key->Name = L"Key";
+			this->Key->ReadOnly = true;
+			// 
+			// Value
+			// 
+			this->Value->HeaderText = L"Value";
+			this->Value->Name = L"Value";
+			this->Value->ReadOnly = true;
+			// 
+			// comboBox1
+			// 
+			this->comboBox1->AutoCompleteCustomSource->AddRange(gcnew cli::array< System::String^  >(6) {
+				L"Неупорядоченная", L"Упорядоченная",
+					L"Хэш-таблица (массив)", L"Хэш-таблица (список)", L"Дерево", L"АВЛ-дерево"
+			});
+			this->comboBox1->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+			this->comboBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->comboBox1->FormattingEnabled = true;
+			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(6) {
+				L"Неупорядоченная", L"Упорядоченная", L"Хэш-таблица (массив)",
+					L"Хэш-таблица (список)", L"Дерево", L"АВЛ-дерево"
+			});
+			this->comboBox1->Location = System::Drawing::Point(273, 60);
+			this->comboBox1->Name = L"comboBox1";
+			this->comboBox1->Size = System::Drawing::Size(166, 23);
+			this->comboBox1->TabIndex = 22;
 			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(646, 427);
-			this->Controls->Add(this->button5);
-			this->Controls->Add(this->button4);
-			this->Controls->Add(this->button3);
-			this->Controls->Add(this->button2);
-			this->Controls->Add(this->button1);
-			this->Controls->Add(this->textBox4);
-			this->Controls->Add(this->textBox3);
+			this->ClientSize = System::Drawing::Size(704, 427);
+			this->Controls->Add(this->comboBox1);
+			this->Controls->Add(this->dataGridView1);
+			this->Controls->Add(this->buttonDelete);
+			this->Controls->Add(this->buttonInsert);
+			this->Controls->Add(this->buttonFind);
+			this->Controls->Add(this->buttonCreateTable);
+			this->Controls->Add(this->buttonExit);
+			this->Controls->Add(this->textBoxResult);
+			this->Controls->Add(this->textBoxKey);
 			this->Controls->Add(this->label5);
 			this->Controls->Add(this->label4);
 			this->Controls->Add(this->label3);
-			this->Controls->Add(this->textBox2);
-			this->Controls->Add(this->textBox1);
+			this->Controls->Add(this->textBoxKeyRange);
+			this->Controls->Add(this->textBoxRecNumber);
 			this->Controls->Add(this->label2);
-			this->Controls->Add(this->radioButton6);
-			this->Controls->Add(this->radioButton5);
-			this->Controls->Add(this->radioButton4);
-			this->Controls->Add(this->radioButton3);
-			this->Controls->Add(this->radioButton2);
-			this->Controls->Add(this->radioButton1);
 			this->Controls->Add(this->label1);
+			this->MaximumSize = System::Drawing::Size(720, 466);
+			this->MinimumSize = System::Drawing::Size(720, 466);
 			this->Name = L"MyForm";
-			this->Text = L"MyForm";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
+			this->Text = L"mp2-lab7 Tables";
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
-	};
+	private: System::Void buttonCreateTable_Click(System::Object^ sender, System::EventArgs^ e) 
+	{		
+		int recNum;
+		try
+		{
+			recNum = int::Parse(textBoxRecNumber->Text);
+		}
+		catch (...)
+		{
+			MessageBox::Show("Ошибка ввода количества записей");
+			return;
+		}
+		try
+		{
+			int recNum = int::Parse(textBoxRecNumber->Text);
+		}
+		catch (...)
+		{
+			MessageBox::Show("Ошибка ввода количества записей");
+			return;
+		}
+		
+		int index = comboBox1->SelectedIndex;
+		switch (index)
+		{
+		case 0:
+			table = new TScanTable(recNum);
+			break;
+		case 1:
+			table = new TSortTable(recNum);
+			break;
+		case 2:
+			table = new TArrayHash(recNum);
+			break;
+		case 3:
+			table = new TListHash(recNum);
+			break;
+		case 4:
+			table = new TTreeTable();
+			break;
+		case 5:
+			table = new TBalTree();
+			break;
+		default:
+			MessageBox::Show("Выберите тип таблицы");
+			return;
+		}
+
+		int keyRange;
+		try
+		{
+			keyRange = int::Parse(textBoxKeyRange->Text);
+		}
+		catch (...)
+		{
+			MessageBox::Show("Ошибка ввода диапазона ключей");
+			return;
+		}
+
+		if (keyRange < recNum)
+		{
+			MessageBox::Show("Слишком маленький диапазон ключей для такого количества записей");
+			return;
+		}
+
+		srand(time(NULL));
+		TRecord record;
+		for (int i = 0; i < recNum; ++i)
+		{
+			bool is_inserted = false;
+			while (is_inserted != true)
+			{
+				record.key = rand() % keyRange;
+				record.value = std::string("record#") + std::to_string(i);
+				is_inserted = table->Insert(record);
+			}
+		}
+		dataGridView1->Rows->Clear();
+		for (table->Reset(); !table->IsEnd(); table->GoNext())
+		{
+			record = table->GetCurrentRecord();
+			String^ key = record.key.ToString();
+			String^ value = msclr::interop::marshal_as<System::String^>(record.value);
+			dataGridView1->Rows->Add(key, value);
+		}
+
+	}
+};
 }

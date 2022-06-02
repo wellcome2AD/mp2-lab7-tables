@@ -47,18 +47,25 @@ void TListHash::Reset() const
 {
 	currList = 0;
 	pCurr = mas[currList].cbegin();
+	while (currList < size && mas[currList].empty())
+	{
+		++currList;
+	}
 }
 void TListHash::GoNext() const 
 {
-	if (pCurr != mas[currList].cend())
-	{
-		++pCurr;
-	}
-	else
+	++pCurr;
+	if (pCurr == mas[currList].cend())
 	{
 		++currList;
-		if(currList < size)
+		while (currList < size && mas[currList].empty())
+		{
+			++currList;
+		}
+		if (currList < size)
+		{
 			pCurr = mas[currList].cbegin();
+		}
 	}
 }
 bool TListHash::IsEnd() const

@@ -7,7 +7,7 @@
 #include <cassert>
 #include <iostream>
 
-int main()
+int main1()
 {
 	int tree_size = -1;
 	TBalTree ah;

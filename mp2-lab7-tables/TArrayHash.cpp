@@ -76,7 +76,12 @@ void TArrayHash::Reset() const
 }
 void TArrayHash::GoNext() const
 {
-	while(mas[curr] == del || mas[curr] == free)
+	if (!(mas[curr] == del) && !(mas[curr] == free))
+	{
+		++curr;
+	}
+
+	while (mas[curr] == del || mas[curr] == free)
 		++curr;
 }
 bool TArrayHash::IsFull() const

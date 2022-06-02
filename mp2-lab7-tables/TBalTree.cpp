@@ -304,4 +304,5 @@ bool TBalTree::Insert(TRecord rec)
         return false;
     }
     InsBalTree(pRoot, rec);
+    return true;
 }
