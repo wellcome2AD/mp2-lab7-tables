@@ -1,5 +1,6 @@
 #pragma once
 #include <msclr\marshal_cppstd.h>
+#include <fstream>
 #include "..\mp2-lab7-tables\TTable.h"
 #include "..\mp2-lab7-tables\TSortTable.h"
 #include "..\mp2-lab7-tables\TScanTable.h"
@@ -66,7 +67,7 @@ namespace CppWinForm1 {
 
 		System::Windows::Forms::ComboBox^ comboBox1;
 
-		TTable* table;	
+		TTable* table = nullptr;	
 
 		/// <summary>
 		/// Required designer variable.
@@ -203,6 +204,7 @@ namespace CppWinForm1 {
 			this->buttonExit->TabIndex = 15;
 			this->buttonExit->Text = L"Выход";
 			this->buttonExit->UseVisualStyleBackColor = true;
+			this->buttonExit->Click += gcnew System::EventHandler(this, &MyForm::buttonExit_Click);
 			// 
 			// buttonCreateTable
 			// 
@@ -226,6 +228,7 @@ namespace CppWinForm1 {
 			this->buttonFind->TabIndex = 17;
 			this->buttonFind->Text = L"Поиск по ключу";
 			this->buttonFind->UseVisualStyleBackColor = true;
+			this->buttonFind->Click += gcnew System::EventHandler(this, &MyForm::buttonFind_Click);
 			// 
 			// buttonInsert
 			// 
@@ -237,6 +240,7 @@ namespace CppWinForm1 {
 			this->buttonInsert->TabIndex = 18;
 			this->buttonInsert->Text = L"Добавить запись";
 			this->buttonInsert->UseVisualStyleBackColor = true;
+			this->buttonInsert->Click += gcnew System::EventHandler(this, &MyForm::buttonInsert_Click);
 			// 
 			// buttonDelete
 			// 
@@ -248,15 +252,20 @@ namespace CppWinForm1 {
 			this->buttonDelete->TabIndex = 19;
 			this->buttonDelete->Text = L"Удалить запись";
 			this->buttonDelete->UseVisualStyleBackColor = true;
+			this->buttonDelete->Click += gcnew System::EventHandler(this, &MyForm::buttonDelete_Click);
 			// 
 			// dataGridView1
 			// 
 			this->dataGridView1->AllowUserToAddRows = false;
 			this->dataGridView1->AllowUserToDeleteRows = false;
+			this->dataGridView1->AllowUserToResizeColumns = false;
+			this->dataGridView1->AllowUserToResizeRows = false;
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(2) { this->Key, this->Value });
 			this->dataGridView1->Location = System::Drawing::Point(11, 12);
 			this->dataGridView1->Name = L"dataGridView1";
+			this->dataGridView1->ReadOnly = true;
+			this->dataGridView1->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
 			this->dataGridView1->Size = System::Drawing::Size(256, 403);
 			this->dataGridView1->TabIndex = 20;
 			// 
@@ -323,7 +332,39 @@ namespace CppWinForm1 {
 
 		}
 #pragma endregion
-	private: System::Void buttonCreateTable_Click(System::Object^ sender, System::EventArgs^ e) 
+private:
+	int table_index = 0;
+	void FillDataGridView()
+	{
+		int index;
+		TRecord record;
+
+		dataGridView1->Rows->Clear();
+		for (table->Reset(); !table->IsEnd(); table->GoNext())
+		{
+			record = table->GetCurrentRecord();
+			String^ key = record.key.ToString();
+			String^ value = msclr::interop::marshal_as<System::String^>(record.value);
+			dataGridView1->Rows->Add(key, value);
+		}
+		dataGridView1->Refresh();
+
+		if (table_index == 5)
+		{
+			std::ofstream file("balanced_tree.txt", std::ios::trunc);
+			file << *table;
+			file.close();
+			system("start notepad balanced_tree.txt");
+		}
+		else if (table_index == 4)
+		{
+			std::ofstream file("tree.txt", std::ios::trunc);
+			file << *table;
+			file.close();
+			system("start notepad tree.txt");
+		}
+	}
+	System::Void buttonCreateTable_Click(System::Object^ sender, System::EventArgs^ e) 
 	{		
 		int recNum;
 		try
@@ -345,8 +386,8 @@ namespace CppWinForm1 {
 			return;
 		}
 		
-		int index = comboBox1->SelectedIndex;
-		switch (index)
+		table_index = comboBox1->SelectedIndex;
+		switch (table_index)
 		{
 		case 0:
 			table = new TScanTable(recNum);
@@ -382,13 +423,13 @@ namespace CppWinForm1 {
 			return;
 		}
 
-		if (keyRange < recNum)
+		if (keyRange <= recNum)
 		{
 			MessageBox::Show("Слишком маленький диапазон ключей для такого количества записей");
 			return;
 		}
 
-		srand(time(NULL));
+		/*srand(time(NULL));
 		TRecord record;
 		for (int i = 0; i < recNum; ++i)
 		{
@@ -399,16 +440,110 @@ namespace CppWinForm1 {
 				record.value = std::string("record#") + std::to_string(i);
 				is_inserted = table->Insert(record);
 			}
-		}
-		dataGridView1->Rows->Clear();
-		for (table->Reset(); !table->IsEnd(); table->GoNext())
+		}*/
+		for (auto value : { 9, 1, 10, 0, 7, 11, 5, 8, 3, 6 })
 		{
-			record = table->GetCurrentRecord();
-			String^ key = record.key.ToString();
-			String^ value = msclr::interop::marshal_as<System::String^>(record.value);
-			dataGridView1->Rows->Add(key, value);
+			TRecord record{ value, std::string("record#") + std::to_string(value) };
+			table->Insert(record);
 		}
+		FillDataGridView();
+	}		
+	System::Void buttonExit_Click(System::Object^ sender, System::EventArgs^ e) 
+	{
+		Application::Exit();
+	}
+	System::Void buttonFind_Click(System::Object^ sender, System::EventArgs^ e) 
+	{
+		if (table == nullptr)
+		{
+			MessageBox::Show("Вы не создали таблицу. Нажмите \"Создать\"");
+			return;
+		}
+		TKey key;
+		try
+		{
+			key = int::Parse(textBoxKey->Text);
+		}
+		catch (...)
+		{
+			MessageBox::Show("Ошибка ввода ключа");
+			return;
+		}
+		bool result = table->Find(key);
+		if (result)
+		{
+			SelectRowContainingKey(key);
+		}
+		textBoxResult->Text = result.ToString();
+	}
+	void SelectRowContainingKey(TKey key)
+	{
+		for (int i = 0; i < dataGridView1->Rows->Count; i++)
+		{
+			String^ key_value = dataGridView1->Rows[i]->Cells["Key"]->Value->ToString()->Trim();
+			if (key_value == key.ToString())
+			{
+				dataGridView1->Rows[i]->Selected = true;
+				dataGridView1->CurrentCell = dataGridView1->Rows[i]->Cells[0];
+			}
+		}
+	}
+	System::Void buttonInsert_Click(System::Object^ sender, System::EventArgs^ e) 
+	{
+		if (table == nullptr)
+		{
+			MessageBox::Show("Вы не создали таблицу. Нажмите \"Создать\"");
+			return;
+		}
+		if (table->IsFull())
+		{
+			MessageBox::Show("Таблица полна. Нажмите \"Удалить запись\"");
+			return;
+		}
+		TKey key;
+		try
+		{
+			key = int::Parse(textBoxKey->Text);
+		}
+		catch (...)
+		{
+			MessageBox::Show("Ошибка ввода ключа");
+			return;
+		}
+		bool result = table->Insert(key);
 
+		FillDataGridView();
+		SelectRowContainingKey(key);
+
+		textBoxResult->Text = result.ToString();
+	}
+	System::Void buttonDelete_Click(System::Object^ sender, System::EventArgs^ e) 
+	{
+		if (table == nullptr)
+		{
+			MessageBox::Show("Вы не создали таблицу. Нажмите \"Создать\"");
+			return;
+		}
+		if (table->IsEmpty())
+		{
+			MessageBox::Show("Таблица пуста. Нажмите \"Добавить запись\"");
+			return;
+		}
+		TKey key;
+		try
+		{
+			key = int::Parse(textBoxKey->Text);
+		}
+		catch (...)
+		{
+			MessageBox::Show("Ошибка ввода ключа");
+			return;
+		}
+		bool result = table->Delete(key);
+
+		FillDataGridView();
+
+		textBoxResult->Text = result.ToString();
 	}
 };
 }

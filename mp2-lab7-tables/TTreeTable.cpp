@@ -1,5 +1,9 @@
 #include "TTreeTable.h"
 #include <iostream>
+void TTreeTable::PrintRec(std::ostream& os) const
+{
+	PrintNode(os, pRoot, 0);
+}
 TTreeTable::TTreeTable() = default;
 TTreeTable::~TTreeTable() { DelTree(pRoot); }
 void TTreeTable::DelTree(TNode* p)
@@ -131,7 +135,10 @@ void TTreeTable::GoNext() const
 		}
 		else
 		{
-			pCurr = st.top();
+			if (!st.empty())
+			{
+				pCurr = st.top();
+			}
 		}
 		currPos++;
 	}
@@ -148,7 +155,7 @@ const TRecord& TTreeTable::GetCurrentRecord() const
 		throw std::exception("Table is empty\n");
 	}
 }
-void TTreeTable::PrintRec(std::ostream& os, const TNode* p, int level)
+void TTreeTable::PrintNode(std::ostream& os, const TNode* p, int level)
 {
 	if (p)
 	{
@@ -157,12 +164,7 @@ void TTreeTable::PrintRec(std::ostream& os, const TNode* p, int level)
 			os << ' ';
 		}
 		os << p->rec.key << std::endl;
-		PrintRec(os, p->pL, level + 1);
-		PrintRec(os, p->pR, level + 1);
+		PrintNode(os, p->pL, level + 1);
+		PrintNode(os, p->pR, level + 1);
 	}
-}
-std::ostream& operator<<(std::ostream& os, const TTreeTable& table)
-{
-	TTreeTable::PrintRec(os, table.pRoot, 0);
-	return os;
 }

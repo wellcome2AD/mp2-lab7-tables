@@ -26,6 +26,7 @@ class TTable
 protected:
 	int dataCount = 0;
 	mutable int eff = 0;
+	virtual void PrintRec(std::ostream& os) const;
 public:
 	TTable();
 	virtual ~TTable() = default;
@@ -45,10 +46,7 @@ public:
 	virtual const TRecord& GetCurrentRecord() const = 0;
 	friend std::ostream& operator<<(std::ostream& os, TTable& t)
 	{
-		for (t.Reset(); !t.IsEnd(); t.GoNext())
-		{
-			os << t.GetCurrentRecord();
-		}
+		t.PrintRec(os);
 		return os;
 	}
 };

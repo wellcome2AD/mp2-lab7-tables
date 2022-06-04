@@ -12,6 +12,6 @@ class TBalTree :
     TNode* FindMax(TNode* p) const;
 public:
     bool Insert(TRecord rec);
-    bool Delete(TRecord rec);
+    bool Delete(TKey key);
 };
 

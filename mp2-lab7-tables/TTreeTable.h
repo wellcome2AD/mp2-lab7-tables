@@ -14,10 +14,11 @@ class TTreeTable : public TTable
 {
 	mutable int currPos = 0;
 	int GetSize() const override { return -1; }
-	static void PrintRec(std::ostream& os, const TNode* p, int level);
+	static void PrintNode(std::ostream& os, const TNode* p, int level);
 protected:
 	mutable TNode* pRoot = nullptr, * pCurr = nullptr, * pPrev = nullptr;
 	mutable std::stack<TNode*> st;
+	void PrintRec(std::ostream& os) const override;
 public:	
 	TTreeTable();
 	~TTreeTable();
@@ -30,6 +31,5 @@ public:
 	bool IsFull() const override { return false; }
 	bool IsEnd() const override;
 	const TRecord& GetCurrentRecord() const override;
-	friend std::ostream& operator<<(std::ostream& os, const TTreeTable& table);
 };
 
