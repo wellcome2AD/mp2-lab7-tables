@@ -68,6 +68,8 @@ namespace CppWinForm1 {
 		System::Windows::Forms::ComboBox^ comboBox1;
 
 		TTable* table = nullptr;	
+	private: System::Windows::Forms::Label^ label6;
+	private: System::Windows::Forms::TextBox^ textBoxEff;
 
 		/// <summary>
 		/// Required designer variable.
@@ -99,6 +101,8 @@ namespace CppWinForm1 {
 			this->Key = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->Value = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
+			this->label6 = (gcnew System::Windows::Forms::Label());
+			this->textBoxEff = (gcnew System::Windows::Forms::TextBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -266,7 +270,7 @@ namespace CppWinForm1 {
 			this->dataGridView1->Name = L"dataGridView1";
 			this->dataGridView1->ReadOnly = true;
 			this->dataGridView1->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
-			this->dataGridView1->Size = System::Drawing::Size(256, 403);
+			this->dataGridView1->Size = System::Drawing::Size(256, 363);
 			this->dataGridView1->TabIndex = 20;
 			// 
 			// Key
@@ -300,11 +304,34 @@ namespace CppWinForm1 {
 			this->comboBox1->Size = System::Drawing::Size(166, 23);
 			this->comboBox1->TabIndex = 22;
 			// 
+			// label6
+			// 
+			this->label6->AutoSize = true;
+			this->label6->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label6->Location = System::Drawing::Point(85, 378);
+			this->label6->Name = L"label6";
+			this->label6->Size = System::Drawing::Size(117, 17);
+			this->label6->TabIndex = 23;
+			this->label6->Text = L"Ёффективность:";
+			// 
+			// textBoxEff
+			// 
+			this->textBoxEff->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->textBoxEff->Location = System::Drawing::Point(112, 398);
+			this->textBoxEff->Name = L"textBoxEff";
+			this->textBoxEff->ReadOnly = true;
+			this->textBoxEff->Size = System::Drawing::Size(56, 21);
+			this->textBoxEff->TabIndex = 24;
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(704, 427);
+			this->Controls->Add(this->textBoxEff);
+			this->Controls->Add(this->label6);
 			this->Controls->Add(this->comboBox1);
 			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->buttonDelete);
@@ -362,6 +389,18 @@ private:
 			file << *table;
 			file.close();
 			system("start notepad tree.txt");
+		}
+	}
+	void SelectRowContainingKey(TKey key)
+	{
+		for (int i = 0; i < dataGridView1->Rows->Count; i++)
+		{
+			String^ key_value = dataGridView1->Rows[i]->Cells["Key"]->Value->ToString()->Trim();
+			if (key_value == key.ToString())
+			{
+				dataGridView1->Rows[i]->Selected = true;
+				dataGridView1->CurrentCell = dataGridView1->Rows[i]->Cells[0];
+			}
 		}
 	}
 	System::Void buttonCreateTable_Click(System::Object^ sender, System::EventArgs^ e) 
@@ -429,7 +468,7 @@ private:
 			return;
 		}
 
-		/*srand(time(NULL));
+		srand(time(NULL));
 		TRecord record;
 		for (int i = 0; i < recNum; ++i)
 		{
@@ -440,12 +479,8 @@ private:
 				record.value = std::string("record#") + std::to_string(i);
 				is_inserted = table->Insert(record);
 			}
-		}*/
-		for (auto value : { 9, 1, 10, 0, 7, 11, 5, 8, 3, 6 })
-		{
-			TRecord record{ value, std::string("record#") + std::to_string(value) };
-			table->Insert(record);
 		}
+
 		FillDataGridView();
 	}		
 	System::Void buttonExit_Click(System::Object^ sender, System::EventArgs^ e) 
@@ -469,24 +504,14 @@ private:
 			MessageBox::Show("ќшибка ввода ключа");
 			return;
 		}
+		table->ClearEffectiveness();
 		bool result = table->Find(key);
 		if (result)
 		{
 			SelectRowContainingKey(key);
 		}
 		textBoxResult->Text = result.ToString();
-	}
-	void SelectRowContainingKey(TKey key)
-	{
-		for (int i = 0; i < dataGridView1->Rows->Count; i++)
-		{
-			String^ key_value = dataGridView1->Rows[i]->Cells["Key"]->Value->ToString()->Trim();
-			if (key_value == key.ToString())
-			{
-				dataGridView1->Rows[i]->Selected = true;
-				dataGridView1->CurrentCell = dataGridView1->Rows[i]->Cells[0];
-			}
-		}
+		textBoxEff->Text = table->GetEffectiveness().ToString();
 	}
 	System::Void buttonInsert_Click(System::Object^ sender, System::EventArgs^ e) 
 	{
@@ -510,12 +535,15 @@ private:
 			MessageBox::Show("ќшибка ввода ключа");
 			return;
 		}
-		bool result = table->Insert(key);
+		TRecord rec = { key, std::string("record#") + std::to_string(key) };
+		table->ClearEffectiveness();
+		bool result = table->Insert(rec);
 
 		FillDataGridView();
 		SelectRowContainingKey(key);
 
 		textBoxResult->Text = result.ToString();
+		textBoxEff->Text = table->GetEffectiveness().ToString();
 	}
 	System::Void buttonDelete_Click(System::Object^ sender, System::EventArgs^ e) 
 	{
@@ -539,11 +567,13 @@ private:
 			MessageBox::Show("ќшибка ввода ключа");
 			return;
 		}
+		table->ClearEffectiveness();
 		bool result = table->Delete(key);
 
 		FillDataGridView();
 
 		textBoxResult->Text = result.ToString();
+		textBoxEff->Text = table->GetEffectiveness().ToString();
 	}
 };
 }

@@ -102,113 +102,146 @@ int TBalTree::RightTreeBalIns(TNode*& p)
 }
 int TBalTree::LeftTreeBalDel(TNode*& p)
 {
-    int res = 0; // did height change
-    ++eff;
-    if (p->balance == 1)
+    int result = 0;
+
+    if (p->balance == 1) 
     {
         p->balance = 0;
-        res = 0;
+        result = -1;
+    }
+    else if (p->balance == 0) 
+    {
+        p->balance = -1;
+        result = 0;
+    }
+    else {
+        TNode* pl = p->pL;
 
-    }
-    else if (p->balance == 0)
-    {
-        p->balance = 1;
-        res = 1;
-    }
-    /*if (p->balance == -1)
-    {
-        p->balance = 0;
-        res = 0;
-
-    }
-    else if (p->balance == 0)
-    {
-        p->balance = 1;
-        res = 1;
-    }*/
-    else
-    {
-        TNode* right = p->pR;
-        if (right->balance == 1) // перевес в левом поддереве слева
+        if (pl->balance == -1) 
         {
-            p->pR = right->pL;
-            right->pL = p;
-            p->balance = right->balance = 0;
-            p = right;
+            p->pL = pl->pR;
+            pl->pR = p;
+
+            pl->balance = 0;
+            p->balance = 0;
+
+            p = pl;
+            result = -1;
         }
-        else if (right->balance == -1) // перевес в левом поддереве справа
+        else if (pl->balance == 1) 
         {
-            TNode* left = right->pL;
-            right->pL = left->pR;
-            p->pR = left->pL;
-            left->pR = right;
-            left->pL = p;
-            if (left->balance == 1)
+            TNode* plpr = pl->pR;
+
+            pl->pR = plpr->pL;
+            plpr->pL = pl;
+            p->pL = plpr->pR;
+            plpr->pR = p;
+            if (plpr->balance == -1) 
             {
-                left->balance = 0;
-                right->balance = -1;// 0;
-                p->balance = -1;
+                p->balance = 1;
             }
-            else
+            else 
             {
-                left->balance = -1;// 0;
-                right->balance = 0;//-1;
                 p->balance = 0;
             }
-            res = 0;
-            p = left;
+            if (plpr->balance == 1) 
+            {
+                pl->balance = -1;
+            }
+            else 
+            {
+                pl->balance = 0;
+            }
+            p = plpr;
+            p->balance = 0;
+            result = -1;
+        }
+        else 
+        {
+            TNode* pp = p;
+            TNode* plpl = pl->pL;
+            TNode* plpr = pl->pR;
+
+            p = pl;
+            p->pL = plpl;
+            p->pR = pp;
+            pp->pL = plpr;
+            pl->balance = 1;
+            return 0;
         }
     }
-    return res;
+    return result;
 }
 int TBalTree::RightTreeBalDel(TNode*& p)
 {
-    int res = 0; // did height change
-    ++eff;
-    if (p->balance == 0)
+   int result = 0;
+	if (p->balance == -1) 
     {
-        p->balance = -1;
-        res = 1;
-    }
-    else if (p->balance == 1)
+		p->balance = 0;
+		result = -1;
+	}
+	else if (p->balance == 0) 
     {
-        p->balance = 0;
-        res = 0;
-    }
-    else
+		p->balance = 1;
+		result = 0;
+	}
+	else 
     {
-        TNode* left = p->pL;
-        if (left->balance == -1) // перевес в правом поддереве справа
+		TNode* pr = p->pR;
+		if (pr->balance == 1) 
         {
-            p->pL = left->pR;
-            left->pR = p;
-            p->balance = left->balance = 0;
-            p = left;
-        }
-        else if (left->balance == 1) // перевес в правом поддереве слева
+			p->pR = pr->pL;
+			pr->pL = p;
+
+			pr->balance = 0;
+			p->balance = 0;
+
+			p = pr;
+			result = -1;
+		}
+		else if (pr->balance == -1) 
         {
-            TNode* right = left->pR;
-            left->pR = right->pL;
-            p->pL = right->pR;
-            right->pL = left;
-            right->pR = p;
-            if (right->balance == 1)
+			TNode* prpl = pr->pL;
+
+			pr->pL = prpl->pR;
+			prpl->pR = pr;
+			p->pR = prpl->pL;
+			prpl->pL = p;
+			if (prpl->balance == 1) 
             {
-                right->balance = 1;// 0;
-                left->balance = 0;
-                p->balance = 0;// 1;
-            }
-            else
+				p->balance = -1;
+			}
+			else 
             {
-                right->balance = 0;
-                left->balance = 1;
-                p->balance = 1;// 0;
-            }
-            res = 0;
-            p = right;
-        }
-    }
-    return res;
+				p->balance = 0;
+			}
+			if (prpl->balance == -1) 
+            {
+				pr->balance = 1;
+			}
+			else 
+            {
+				pr->balance = 0;
+			}
+			p = prpl;
+			p->balance = 0;
+			result = -1;
+		}
+		else 
+        {
+			TNode* pp = p;
+			TNode* prpl = pr->pL;
+			TNode* prpr = pr->pR;
+
+			p = pr;
+			p->pL = pp;
+			p->pR = prpr;
+			pp->pR = prpl;
+			pr->balance = -1;
+			return 0;
+		}
+	}
+	return result;
 }
 int TBalTree::InsBalTree(TNode*& p, TRecord rec)
 {
