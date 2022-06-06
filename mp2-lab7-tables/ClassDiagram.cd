@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TArrayHash" Collapsed="true">
+    <Position X="10.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEkAAAAACBACAAIAAkAAAAIEoAAAIAACAAAAAABA=</HashCode>
+      <FileName>TArrayHash.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TArrayTable" Collapsed="true">
+    <Position X="7.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAACBACAAIAAEAAAAIAAAAAIAAAAAIEAABA=</HashCode>
+      <FileName>TArrayTable.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TBalTree" Collapsed="true">
+    <Position X="5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAACAAAAIBAACCAAAAAAEAAAAAAAAAABEAAAA=</HashCode>
+      <FileName>TBalTree.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="THashTable" Collapsed="true">
+    <Position X="11.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>THashTable.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TListHash" Collapsed="true">
+    <Position X="12.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAEEAAAAACBACAAIAAEAAAAIEICAAIAACAAAAAAAA=</HashCode>
+      <FileName>TListHash.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TScanTable" Collapsed="true">
+    <Position X="7" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAABAAAAAAAAAAAAAEIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TScanTable.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TSortTable" Collapsed="true">
+    <Position X="8.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAgAAQAAAAAQEIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TSortTable.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TTable">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABQAEBAAhACBAKAAAAAEAQAAIEMAAAIEAAAAAAAAEA=</HashCode>
+      <FileName>TTable.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TTreeTable" Collapsed="true">
+    <Position X="5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAgAACBACAAAIAUgQAAIEICCAIAAQAAAAAAAA=</HashCode>
+      <FileName>TTreeTable.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="TRecord" Collapsed="true">
+    <Position X="12" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAQAABAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>TTable.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="TNode" Collapsed="true">
+    <Position X="10.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAAIAAAAIAAgAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>TTreeTable.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="TKey" Collapsed="true">
+    <Position X="10.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TTable.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="TValue" Collapsed="true">
+    <Position X="12" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TTable.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

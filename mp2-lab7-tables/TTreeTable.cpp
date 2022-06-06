@@ -47,6 +47,7 @@ bool TTreeTable::Insert(TRecord rec)
 	if (pCurr == nullptr)
 	{
 		pRoot = tmp;
+		++dataCount;
 	}
 	else
 	{
