@@ -1,41 +1,25 @@
-#include "TScanTable.h"
+/*#include "TScanTable.h"
 #include "TSortTable.h"
 #include "TArrayHash.h"
 #include "TListHash.h"
 #include "TTreeTable.h"
-#include "TBalTree.h"
+*/
+//#include "TBalTree.h"
 #include <cassert>
 #include <iostream>
+#include <vector>
+#include "AVLTreeTable.h"
 
-int main1()
+int main()
 {
-	int tree_size = -1;
-	TBalTree ah;
-	TTable& table = ah;
-	assert(table.GetDataCount() == 0);
-	TRecord empty_rec;
-	try
+	AVLTreeTable table;
+	//TBalTree table;
+	std::vector<int> keys = { 6, 3, 9, 12, 43, 0, 8, 2, 5, 1, 7, 23, 52, 30, 14, 17 };
+	for (int i = 0; i < keys.size(); ++i)
 	{
-		empty_rec = table.GetCurrentRecord();
+		TRecord rec(keys[i], std::string("Record#") + std::to_string(keys[i]));
+		table.Insert(rec);
 	}
-	catch (const std::exception& ex)
-	{
-		std::cout << ex.what();
-	}
-	assert(table.GetEffectiveness() == 0);
-	assert(table.GetSize() == tree_size);
-	assert(table.IsEmpty() == true);
-	assert(table.IsFull() == false);
-	TRecord rec_array[10];
-	std::vector<int> keys = { 6, 4, 10, 8, 12, 11 };
-	int size = keys.size();
-	for (int i = 0; i < size; ++i)
-	{
-		rec_array[i] = TRecord(keys[i], std::string());
-		if (i == 5)
-			bool is_here = true;
-		table.Insert(rec_array[i]);
-	}
-	std::cout << dynamic_cast<TBalTree&>(table);
+	std::cout << table;
 	return 0;
 }
