@@ -26,7 +26,7 @@ struct TNode
 {
 	TRecord rec;
 	TNode* pRight, * pLeft;
-	int mHeight;
+	int mHeight = 1;
 	TNode(TRecord rec) : rec(rec), pLeft(nullptr), pRight(nullptr) {}
 };
 
