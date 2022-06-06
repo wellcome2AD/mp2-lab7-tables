@@ -5,7 +5,7 @@
 #include "THashTable.h"
 class TListHash : public THashTable
 {
-	std::vector<std::list<TRecord>> mas; // ?
+	std::vector<std::list<TRecord>> mas;
 	int size;
 	mutable int currList = 0; // номер списка
 	mutable std::list<TRecord>::const_iterator pCurr; // указатель на звено

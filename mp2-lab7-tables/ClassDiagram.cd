@@ -3,7 +3,7 @@
   <Class Name="TArrayHash" Collapsed="true">
     <Position X="10.5" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAEkAAAAACBACAAIAAkAAAAIEoAAAIAACAAAAAABA=</HashCode>
+      <HashCode>AAAEEkAAAAACBACAAIAAkAAAAIEoAAAIAACAAAAAABA=</HashCode>
       <FileName>TArrayHash.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -15,7 +15,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="TBalTree" Collapsed="true">
-    <Position X="5" Y="6" Width="1.5" />
+    <Position X="5.25" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAEAAACAAAAIBAACCAAAAAAEAAAAAAAAAABEAAAA=</HashCode>
       <FileName>TBalTree.h</FileName>
@@ -49,15 +49,15 @@
       <FileName>TSortTable.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TTable">
-    <Position X="7" Y="0.5" Width="1.5" />
+  <Class Name="TTable" Collapsed="true">
+    <Position X="7.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AABQAEBAAhACBAKAAAAAEAQAAIEMAAAIEAAAAAAAAEA=</HashCode>
       <FileName>TTable.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TTreeTable" Collapsed="true">
-    <Position X="5" Y="4.25" Width="1.5" />
+    <Position X="5.25" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAEAAgAACBACAAAIAUgQAAIEICCAIAAQAAAAAAAA=</HashCode>
       <FileName>TTreeTable.h</FileName>

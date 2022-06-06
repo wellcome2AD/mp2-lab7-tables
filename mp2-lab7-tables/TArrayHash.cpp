@@ -8,6 +8,7 @@ TArrayHash::TArrayHash(int _size, int _step) : mas(new TRecord[_size]), size(_si
 		mas[i] = free;
 	}
 }
+TArrayHash::~TArrayHash() {	delete[] mas; }
 int TArrayHash::GetSize() const { return size; }
 const TRecord& TArrayHash::GetCurrentRecord() const
 {

@@ -44,19 +44,18 @@ bool TTreeTable::Insert(TRecord rec)
 	if (Find(rec.key))
 		return false;
 	TNode* tmp = new TNode(rec);
+	++dataCount;
+	++eff;
 	if (pCurr == nullptr)
 	{
 		pRoot = tmp;
-		++dataCount;
 	}
 	else
 	{
 		if (rec.key > pCurr->rec.key)
 			pCurr->pR = tmp;
 		else
-			pCurr->pL = tmp;
-		++dataCount;
-		++eff;
+			pCurr->pL = tmp;		
 		return true;
 	}
 }

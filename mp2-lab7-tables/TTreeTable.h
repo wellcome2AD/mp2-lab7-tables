@@ -19,10 +19,10 @@ protected:
 	mutable TNode* pRoot = nullptr, * pCurr = nullptr, * pPrev = nullptr;
 	mutable std::stack<TNode*> st;
 	void PrintRec(std::ostream& os) const override;
+	void DelTree(TNode* p);
 public:	
 	TTreeTable();
 	~TTreeTable();
-	void DelTree(TNode* p);
 	bool Find(TKey) const override;
 	bool Insert(TRecord) override;
 	bool Delete(TKey) override;
