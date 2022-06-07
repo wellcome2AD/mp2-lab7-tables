@@ -5,45 +5,45 @@ int TBalTree::LeftTreeBalIns(TNode*& p)
 {
     int res = 0; // did height change
     ++eff;
-    if (p->balance == 1)
+    if (p->_height == 1)
     {
-        p->balance = 0;
+        p->_height = 0;
         res = 0;
 
     }
-    else if (p->balance == 0)
+    else if (p->_height == 0)
     {
-        p->balance = -1;
+        p->_height = -1;
         res = 1;
     }
     else
     {
         TNode* left = p->pL;
-        if (left->balance == -1) // перевес в левом поддереве слева
+        if (left->_height == -1) // перевес в левом поддереве слева
         {
             p->pL = left->pR;
             left->pR = p;
-            p->balance = left->balance = 0;
+            p->_height = left->_height = 0;
             p = left;
         }
-        else if (left->balance == 1) // перевес в левом поддереве справа
+        else if (left->_height == 1) // перевес в левом поддереве справа
         {
             TNode* right = left->pR;
             left->pR = right->pL;
             p->pL = right->pR;
             right->pL = left;
             right->pR = p;
-            if (right->balance == -1)
+            if (right->_height == -1)
             {
-                right->balance = 0;
-                left->balance = 1;// 0;
-                p->balance = 1;
+                right->_height = 0;
+                left->_height = 1;// 0;
+                p->_height = 1;
             }
             else
             {
-                right->balance = 1;// 0;
-                left->balance = 0;//-1;
-                p->balance = 0;
+                right->_height = 1;// 0;
+                left->_height = 0;//-1;
+                p->_height = 0;
             }
             res = 0;
             p = right;
@@ -55,44 +55,44 @@ int TBalTree::RightTreeBalIns(TNode*& p)
 {
     int res = 0; // did height change
     ++eff;
-    if (p->balance == 0)
+    if (p->_height == 0)
     {
-        p->balance = 1;
+        p->_height = 1;
         res = 1;
     }
-    else if (p->balance == -1)
+    else if (p->_height == -1)
     {
-        p->balance = 0;
+        p->_height = 0;
         res = 0;
     }
     else
     {
         TNode* right = p->pR;
-        if (right->balance == 1) // перевес в правом поддереве справа
+        if (right->_height == 1) // перевес в правом поддереве справа
         {
             p->pR = right->pL;
             right->pL = p;
-            p->balance = right->balance = 0;
+            p->_height = right->_height = 0;
             p = right;
         }
-        else if (right->balance == -1) // перевес в правом поддереве слева
+        else if (right->_height == -1) // перевес в правом поддереве слева
         {
             TNode* left = right->pL;
             right->pL = left->pR;
             p->pR = left->pL;
             left->pR = right;
             left->pL = p;
-            if (left->balance == -1)
+            if (left->_height == -1)
             {
-                left->balance = -1;// 0;
-                right->balance = 0;
-                p->balance = 0;// 1;
+                left->_height = -1;// 0;
+                right->_height = 0;
+                p->_height = 0;// 1;
             }
             else
             {
-                left->balance = 0;
-                right->balance = -1;
-                p->balance = -1;// 0;
+                left->_height = 0;
+                right->_height = -1;
+                p->_height = -1;// 0;
             }
             res = 0;
             p = left;
@@ -103,32 +103,31 @@ int TBalTree::RightTreeBalIns(TNode*& p)
 int TBalTree::LeftTreeBalDel(TNode*& p)
 {
     int result = 0;
-
-    if (p->balance == 1) 
+    if (p->_height == 1) 
     {
-        p->balance = 0;
+        p->_height = 0;
         result = -1;
     }
-    else if (p->balance == 0) 
+    else if (p->_height == 0) 
     {
-        p->balance = -1;
+        p->_height = -1;
         result = 0;
     }
     else {
         TNode* pl = p->pL;
 
-        if (pl->balance == -1) 
+        if (pl->_height == -1) 
         {
             p->pL = pl->pR;
             pl->pR = p;
 
-            pl->balance = 0;
-            p->balance = 0;
+            pl->_height = 0;
+            p->_height = 0;
 
             p = pl;
             result = -1;
         }
-        else if (pl->balance == 1) 
+        else if (pl->_height == 1) 
         {
             TNode* plpr = pl->pR;
 
@@ -136,24 +135,24 @@ int TBalTree::LeftTreeBalDel(TNode*& p)
             plpr->pL = pl;
             p->pL = plpr->pR;
             plpr->pR = p;
-            if (plpr->balance == -1) 
+            if (plpr->_height == -1) 
             {
-                p->balance = 1;
+                p->_height = 1;
             }
             else 
             {
-                p->balance = 0;
+                p->_height = 0;
             }
-            if (plpr->balance == 1) 
+            if (plpr->_height == 1) 
             {
-                pl->balance = -1;
+                pl->_height = -1;
             }
             else 
             {
-                pl->balance = 0;
+                pl->_height = 0;
             }
             p = plpr;
-            p->balance = 0;
+            p->_height = 0;
             result = -1;
         }
         else 
@@ -166,7 +165,7 @@ int TBalTree::LeftTreeBalDel(TNode*& p)
             p->pL = plpl;
             p->pR = pp;
             pp->pL = plpr;
-            pl->balance = 1;
+            pl->_height = 1;
             return 0;
         }
     }
@@ -175,31 +174,31 @@ int TBalTree::LeftTreeBalDel(TNode*& p)
 int TBalTree::RightTreeBalDel(TNode*& p)
 {
    int result = 0;
-	if (p->balance == -1) 
+	if (p->_height == -1) 
     {
-		p->balance = 0;
+		p->_height = 0;
 		result = -1;
 	}
-	else if (p->balance == 0) 
+	else if (p->_height == 0) 
     {
-		p->balance = 1;
+		p->_height = 1;
 		result = 0;
 	}
 	else 
     {
 		TNode* pr = p->pR;
-		if (pr->balance == 1) 
+		if (pr->_height == 1) 
         {
 			p->pR = pr->pL;
 			pr->pL = p;
 
-			pr->balance = 0;
-			p->balance = 0;
+			pr->_height = 0;
+			p->_height = 0;
 
 			p = pr;
 			result = -1;
 		}
-		else if (pr->balance == -1) 
+		else if (pr->_height == -1) 
         {
 			TNode* prpl = pr->pL;
 
@@ -207,24 +206,24 @@ int TBalTree::RightTreeBalDel(TNode*& p)
 			prpl->pR = pr;
 			p->pR = prpl->pL;
 			prpl->pL = p;
-			if (prpl->balance == 1) 
+			if (prpl->_height == 1) 
             {
-				p->balance = -1;
+				p->_height = -1;
 			}
 			else 
             {
-				p->balance = 0;
+				p->_height = 0;
 			}
-			if (prpl->balance == -1) 
+			if (prpl->_height == -1) 
             {
-				pr->balance = 1;
+				pr->_height = 1;
 			}
 			else 
             {
-				pr->balance = 0;
+				pr->_height = 0;
 			}
 			p = prpl;
-			p->balance = 0;
+			p->_height = 0;
 			result = -1;
 		}
 		else 
@@ -237,7 +236,7 @@ int TBalTree::RightTreeBalDel(TNode*& p)
 			p->pL = pp;
 			p->pR = prpr;
 			pp->pR = prpl;
-			pr->balance = -1;
+			pr->_height = -1;
 			return 0;
 		}
 	}
@@ -246,6 +245,7 @@ int TBalTree::RightTreeBalDel(TNode*& p)
 int TBalTree::InsBalTree(TNode*& p, TRecord rec)
 {
     int res = 0;
+    ++eff;
     if (p == nullptr)
     {
         p = new TNode(rec);
@@ -308,7 +308,7 @@ int TBalTree::DelBalTree(TNode*& p, TKey key)
             p->rec = p->pL->rec;
             delete p->pL;
             p->pL = nullptr;
-            p->balance = 0;
+            p->_height = 0;
             res = -1;
         }
         else if (p->pL == nullptr && p->pR != nullptr) // удаление вершины с одним потомком справа
@@ -316,7 +316,7 @@ int TBalTree::DelBalTree(TNode*& p, TKey key)
             p->rec = p->pR->rec;
             delete p->pR;
             p->pR = nullptr;
-            p->balance = 0;
+            p->_height = 0;
             res = 1;
         }
         else  // удаление вершины с двумя потомками
@@ -330,14 +330,16 @@ int TBalTree::DelBalTree(TNode*& p, TKey key)
                 res = RightTreeBalDel(p->pR);
             }
         }
-        return res;
     }
+    return res;
 }
 TNode* TBalTree::FindMax(TNode* p) const
 {
     assert(p != nullptr);
+    ++eff;
     while (p->pR)
     {
+        ++eff;
         p = p->pR;
     }
     return p;

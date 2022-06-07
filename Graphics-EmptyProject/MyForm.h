@@ -7,7 +7,7 @@
 #include "..\mp2-lab7-tables\TArrayHash.h"
 #include "..\mp2-lab7-tables\TListHash.h"
 #include "..\mp2-lab7-tables\TTreeTable.h"
-#include "..\mp2-lab7-tables\TBalTree.h"
+#include "..\mp2-lab7-tables\AVLTreeTable.h"
 namespace CppWinForm1 {
 
 	using namespace System;
@@ -444,7 +444,7 @@ private:
 			table = new TTreeTable();
 			break;
 		case 5:
-			table = new TBalTree();
+			table = new AVLTreeTable();
 			break;
 		default:
 			MessageBox::Show("Выберите тип таблицы");

@@ -5,7 +5,7 @@ struct TNode
 {
 	TRecord rec;
 	TNode* pL, * pR;
-	int balance = 0; // <0 if the left child outweighs the right one
+	int _height = 1; // <0 if the left child outweighs the right one
 					 // =0 left and right children are balanced
 					 // >0 if the right child outweighs the left one
 	TNode(TRecord rec) : rec(rec), pL(nullptr), pR(nullptr) {}

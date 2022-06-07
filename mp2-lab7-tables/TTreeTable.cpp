@@ -53,11 +53,15 @@ bool TTreeTable::Insert(TRecord rec)
 	else
 	{
 		if (rec.key > pCurr->rec.key)
+		{
 			pCurr->pR = tmp;
+		}
 		else
-			pCurr->pL = tmp;		
-		return true;
+		{
+			pCurr->pL = tmp;
+		}
 	}
+	return true;
 }
 bool TTreeTable::Delete(TKey key)
 {
@@ -88,6 +92,7 @@ bool TTreeTable::Delete(TKey key)
 		pPrev = pCurr;
 		while (tmp->pR != nullptr)
 		{
+			++eff;
 			pPrev = tmp;
 			tmp = tmp->pR;
 		}

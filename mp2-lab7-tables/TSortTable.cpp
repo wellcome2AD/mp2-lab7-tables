@@ -53,6 +53,7 @@ bool TSortTable::Find(TKey key) const
 	while (left <= right)
 	{
 		mid = (left + right) / 2;
+		++eff;
 		if (mas[mid].key > key)
 		{
 			right = mid - 1;
@@ -64,7 +65,6 @@ bool TSortTable::Find(TKey key) const
 		else 
 		{
 			curr = mid;
-			++eff;
 			return true;
 		}
 	}
@@ -77,7 +77,7 @@ bool TSortTable::Insert(TRecord rec)
 	{
 		return false;
 	}
-	for (int i = dataCount; i > curr; i--)
+	for (int i = dataCount; i > curr; --i, ++eff)
 	{
 		mas[i] = mas[i - 1];
 	}

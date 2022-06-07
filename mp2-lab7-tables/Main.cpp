@@ -10,7 +10,7 @@
 #include <vector>
 #include "AVLTreeTable.h"
 
-int main()
+int main1()
 {
 	AVLTreeTable table;
 	//TBalTree table;

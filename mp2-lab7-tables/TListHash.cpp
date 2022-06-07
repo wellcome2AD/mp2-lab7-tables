@@ -7,17 +7,17 @@ bool TListHash::Find(TKey key) const
 	int pos = HashFunc(key) % size;
 	bool res = false;
 	currList = pos;
+	++eff;
 	if (mas[pos].empty())
 	{
 		pCurr = mas[pos].cbegin();
 	}
 	else
 	{
-		for (pCurr = mas[pos].cbegin(); pCurr != mas[pos].cend(); ++pCurr)
+		for (pCurr = mas[pos].cbegin(); pCurr != mas[pos].cend(); ++pCurr, ++eff) 
 		{
 			if (pCurr->key == key)
 			{
-				++eff;
 				res = true;
 				break;
 			}
@@ -29,9 +29,9 @@ bool TListHash::Insert(TRecord rec)
 {
 	if (Find(rec.key) || IsFull())
 		return false;
+	eff += mas[currList].size() + 1;
 	pCurr = mas[currList].insert(pCurr, rec);
 	++dataCount;
-	++eff;
 	return true;
 }
 bool TListHash::Delete(TKey key) 
@@ -46,10 +46,14 @@ bool TListHash::Delete(TKey key)
 void TListHash::Reset() const 
 {
 	currList = 0;
-	pCurr = mas[currList].cbegin();
+	pCurr = decltype(pCurr){};
 	while (currList < size && mas[currList].empty())
 	{
 		++currList;
+	}
+	if (currList < size)
+	{
+		pCurr = mas[currList].cbegin();
 	}
 }
 void TListHash::GoNext() const 
