@@ -12,14 +12,16 @@ TArrayHash::~TArrayHash() {	delete[] mas; }
 int TArrayHash::GetSize() const { return size; }
 const TRecord& TArrayHash::GetCurrentRecord() const
 {
-	if (!IsEnd() && !IsEmpty())
+	/*if (!IsEnd() && !IsEmpty())
 	{
 		return mas[curr];
 	}
 	else
 	{
-		throw std::exception();
-	}
+//		throw std::exception();
+		return TRecord();
+	}*/
+	return mas[curr];
 }
 bool TArrayHash::Find(TKey key) const
 {
@@ -74,6 +76,10 @@ bool TArrayHash::Delete(TKey key)
 void TArrayHash::Reset() const
 {
 	curr = 0;
+	while (curr < dataCount && (mas[curr].key == -1 || mas[curr].key == -2))
+	{
+		++curr;
+	}
 }
 void TArrayHash::GoNext() const
 {
@@ -83,7 +89,13 @@ void TArrayHash::GoNext() const
 	}
 
 	while (mas[curr] == del || mas[curr] == free)
+	{
 		++curr;
+	}
+	/*while (!IsEnd() && mas[curr].key == -1)
+	{
+		++curr;
+	}*/
 }
 bool TArrayHash::IsFull() const
 {

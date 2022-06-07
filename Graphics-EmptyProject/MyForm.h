@@ -429,16 +429,16 @@ private:
 		switch (table_index)
 		{
 		case 0:
-			table = new TScanTable(recNum);
+			table = new TScanTable(recNum + 10);
 			break;
 		case 1:
-			table = new TSortTable(recNum);
+			table = new TSortTable(recNum+10);
 			break;
 		case 2:
-			table = new TArrayHash(recNum);
+			table = new TArrayHash(recNum + 10);
 			break;
 		case 3:
-			table = new TListHash(recNum);
+			table = new TListHash(recNum + 10);
 			break;
 		case 4:
 			table = new TTreeTable();

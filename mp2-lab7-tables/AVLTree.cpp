@@ -63,8 +63,12 @@ TNode* AVLTreeTable::insert(TNode* p, TRecord rec)
 	}
 	if (rec.key < p->rec.key)
 		p->pL = insert(p->pL, rec);
-	else
+	else if (rec.key > p->rec.key)
 		p->pR = insert(p->pR, rec);
+	else
+	{
+		return p;
+	}
 	return balance(p);
 }
 TNode* AVLTreeTable::findMin(TNode* p)

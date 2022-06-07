@@ -152,7 +152,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AVLTree.cpp" />
-    <ClCompile Include="AVLTreeTable.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="TArrayHash.cpp" />
     <ClCompile Include="TArrayTable.cpp" />
